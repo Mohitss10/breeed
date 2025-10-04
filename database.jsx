@@ -34,4 +34,5 @@ export default function BreedsPage() {
             </div>
         </div>
     );
+
 }
