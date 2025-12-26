@@ -192,3 +192,40 @@ select:focus {
 }
 
 
+/* =========================
+   ACCOUNT PAGE – SAFE FIXES
+   (USES EXISTING THEME VARS)
+========================= */
+
+/* Prevent mobile backdrop + transform transparency bug */
+.account-layout {
+  isolation: isolate;
+  background-color: var(--background);
+}
+
+/* Sidebar must always have solid bg on mobile */
+.account-sidebar {
+  background-color: var(--secondary-bg);
+  border-color: var(--border-color);
+  color: var(--text-color);
+  will-change: transform;
+}
+
+/* Desktop: let layout breathe normally */
+@media (min-width: 768px) {
+  .account-sidebar {
+    background-color: transparent;
+  }
+}
+
+/* Mobile overlay (theme-safe) */
+.account-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Account / Contact / Menu spacing */
+.account-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
