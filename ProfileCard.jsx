@@ -7,21 +7,21 @@ export default function ProfileCard({ user, signOut, profileOpen, setProfileOpen
   return (
     <>
       {/* backdrop for click outside */}
-     <div
-  className="fixed inset-0 bg-transparent z-[9998]"
-  onClick={() => setProfileOpen(false)}
-></div>
-
+      <div
+        className="fixed inset-0 bg-transparent z-[9998]"
+        onClick={() => setProfileOpen(false)}
+      ></div>
 
       {/* actual card */}
       <div
         id="profile-card"
-        className="fixed right-4 top-16 w-80 bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 ease-out z-[9999]"
+        className="fixed right-4 top-16 w-80 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 ease-out z-[9999]"
+        style={{ backgroundColor: "var(--secondary-bg)", color: "var(--text-color)" }}
       >
         {/* Header */}
-        <div className="relative h-24 bg-gradient-to-r from-blue-500 to-blue-700">
+        <div className="relative h-24 bg-gradient-to-r from-green-500 to-green-700">
           <img
-            src="https://www.shutterstock.com/shutterstock/videos/3616833015/thumb/1.jpg?ip=x480"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeyOrtvFtfc6bikgiU6R5hXrqD274Ly_ripw&s"
             alt="background"
             className="absolute inset-0 w-full h-full object-cover opacity-40"
           />
@@ -43,34 +43,28 @@ export default function ProfileCard({ user, signOut, profileOpen, setProfileOpen
 
           {/* Buttons */}
           <div className="mt-4 flex flex-col items-center space-y-3">
-            <Link
-              href="/account"
-              onClick={() => setProfileOpen(false)}
-              className="cursor-pointer w-3/4 bg-blue-50 text-black hover:text-blue-600 font-medium text-sm py-2 rounded-lg hover:bg-blue-100 transition"
-            >
-              Account
-            </Link>
+<Link
+  href="/profile/account"
+  onClick={() => setProfileOpen(false)}
+  className="cursor-pointer w-3/4 font-medium text-sm py-2 rounded-lg hover:text-green-600 transition btn-theme text-center"
+>
+  Account
+</Link>
 
-            <Link
-              href="/account"
-              onClick={() => setProfileOpen(false)}
-              className="cursor-pointer w-3/4 bg-blue-50 text-black hover:text-blue-600 font-medium text-sm py-2 rounded-lg hover:bg-blue-100 transition"
-            >
-              Preferences
-            </Link>
           </div>
 
-          <hr className="my-4" />
+          <hr className="my-4 border-theme" />
 
           <button
-            onClick={() => {
-              setProfileOpen(false);
-              signOut({ redirectUrl: "/" });
-            }}
-            className="cursor-pointer w-3/4 mx-auto bg-red-50 text-red-600 hover:bg-red-100 font-medium py-2 rounded-lg transition"
-          >
-            Logout
-          </button>
+  onClick={() => {
+    setProfileOpen(false);
+    signOut({ redirectUrl: "/" });
+  }}
+  className="cursor-pointer w-3/4 mx-auto py-2 rounded-lg font-medium transition btn-theme-logout"
+>
+  Logout
+</button>
+
         </div>
       </div>
     </>
