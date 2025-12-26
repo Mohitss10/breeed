@@ -1,0 +1,194 @@
+@import "tailwindcss";
+
+/* =========================
+   GLOBAL THEME VARIABLES
+========================= */
+
+/* 🌞 LIGHT THEME (DEFAULT) */
+:root {
+  --background: #ffffff; /* main background */
+  --text-color: #1f2937; /* primary text (gray-800) */
+  --secondary-bg: #f0fdfd; /* cards, sidebar, etc. (light green) */
+  --border-color: #e5e7eb; /* gray-200 for borders */
+  --primary: #2e7d32; /* main green */
+  --accent: #8d6e63; /* accent color */
+  --placeholder-color: rgba(0, 0, 0, 0.45); /* input placeholders */
+}
+
+/* 🌙 DARK THEME */
+[data-theme="dark"] {
+  --background: #121212;
+  --text-color: #e5e7eb; /* gray-200 */
+  --secondary-bg: #1e1e1e; /* cards, sidebar */
+  --border-color: #374151; /* gray-700 */
+  --primary: #1b5e20;
+  --accent: #66bb6a;
+  --placeholder-color: rgba(255, 255, 255, 0.55);
+}
+
+/* =========================
+   TAILWIND THEME OVERRIDES
+========================= */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--text-color);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* =========================
+   GLOBAL BODY STYLES
+========================= */
+body {
+  background-color: var(--background);
+  color: var(--text-color);
+  font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* =========================
+   PLACEHOLDER COLORS
+========================= */
+::placeholder {
+  color: var(--placeholder-color);
+  opacity: 1;
+}
+
+/* =========================
+   CARD & COMPONENT BACKGROUNDS
+========================= */
+.bg-secondary {
+  background-color: var(--secondary-bg);
+}
+
+.border-theme {
+  border-color: var(--border-color);
+}
+
+.text-theme {
+  color: var(--text-color);
+}
+
+.button-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+.button-accent {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+/* =========================
+   SHADOWS & TRANSITIONS
+========================= */
+.shadow-theme {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.transition-theme {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* =========================
+   INPUT FOCUS
+========================= */
+input,
+textarea,
+select {
+  background-color: var(--secondary-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+/* =========================
+   THEME-AWARE SCALE LOADER
+========================= */
+
+.loader-bar {
+  width: 4px;
+  height: 100%;
+  background-color: #000000; /* BLACK for LIGHT theme */
+  border-radius: 2px;
+  animation: scaleLoader 1.2s infinite ease-in-out;
+  opacity: 0.85;
+}
+
+/* Accent bars for depth (light) */
+.loader-bar:nth-child(2),
+.loader-bar:nth-child(4) {
+  background-color: #222222;
+  opacity: 0.75;
+}
+
+/* 🌙 DARK THEME OVERRIDE */
+[data-theme="dark"] .loader-bar {
+  background-color: var(--primary);
+}
+
+[data-theme="dark"] .loader-bar:nth-child(2),
+[data-theme="dark"] .loader-bar:nth-child(4) {
+  background-color: var(--accent);
+}
+
+/* Animation delays */
+.loader-bar:nth-child(1) { animation-delay: 0s; }
+.loader-bar:nth-child(2) { animation-delay: 0.15s; }
+.loader-bar:nth-child(3) { animation-delay: 0.3s; }
+.loader-bar:nth-child(4) { animation-delay: 0.45s; }
+
+@keyframes scaleLoader {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+    opacity: 0.5;
+  }
+  20% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* =========================
+   PROFILE BUTTON THEME
+========================= */
+.btn-theme {
+  background-color: #e0f2fe; /* light theme default */
+  color: black;
+  transition: all 0.3s;
+}
+
+[data-theme="dark"] .btn-theme {
+  background-color: #312622; /* brownish color in dark theme */
+  color: var(--text-color);   /* readable text in dark mode */
+}
+
+/* Logout Button Theme */
+.btn-theme-logout {
+  background-color: #fee2e2; /* light theme default (red-50) */
+  color: #b91c1c;            /* red-600 */
+  transition: all 0.3s;
+}
+
+.btn-theme-logout:hover {
+  background-color: #fecaca; /* light theme hover (red-100) */
+}
+
+[data-theme="dark"] .btn-theme-logout {
+  background-color: #e0b9ab; /* brownish color in dark theme */
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .btn-theme-logout:hover {
+  background-color: #b85a38; /* slightly lighter brown on hover */
+}
+
+
