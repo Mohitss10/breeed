@@ -1,58 +1,116 @@
 "use client";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
-import AccountSidebar from "./components/AccountSidebar";
-import AccountDetails from "./components/AccountDetails";
-import Preferences from "./components/Preferences";
-import Contact from "./components/Contact";
 
-export default function AccountPage() {
-  const [activeTab, setActiveTab] = useState("account");
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+// app/page.js
+import Link from "next/link";
+import { Search, BarChart3, Users } from "lucide-react";
+import ContactUs from "./components/ContactUs";
+import Footer from "./components/Footer";
 
+export default function HomePage() {
   return (
-    <div className="mt-2 flex justify-center items-center  bg-gray-100 text-gray-800 p-4 min-h-[80vh]">
-      {/* Outer Container */}
-      <div className="relative flex flex-col md:flex-row w-full max-w-5xl bg-white rounded-2xl min-h-[87.5vh] mt-12 shadow-xl overflow-hidden">
+    <main className="flex min-h-screen items-center justify-center pt-16 px-6 font-sans">
+      {/* REMOVED text-gray-* → now inherits from global theme */}
+      <div className="min-h-screen flex flex-col">
 
-        {/* Mobile Header */}
-        <header className="md:hidden flex justify-between items-center p-4 border-b bg-white ">
-          <h2 className="text-lg font-semibold">Account Settings</h2>
-          <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 transition"
-          >
-            {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </header>
-
-        {/* Sidebar */}
-        <aside
-          className={`fixed md:static top-0 left-0 h-full md:h-auto bg-white md:bg-transparent shadow-lg md:shadow-none w-64 md:w-1/3 lg:w-1/4 p-6 z-50 transform transition-transform duration-300 ease-in-out
-            ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 border-r border-gray-200`}
+        {/* ================= HERO SECTION ================= */}
+        <div
+          className="relative flex flex-col items-center rounded-3xl justify-center min-h-[50vh] sm:min-h-[60vh] p-6 mt-2 sm:p-8 bg-cover bg-center"
+          style={{
+            backgroundImage: `linear-gradient(rgba(21, 33, 17, 0.6), rgba(21, 33, 17, 0.8)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBKz1u9tJrAZlohL9Y6tfFH8wAK88yRRTfUwVXbDKyRDbB2F5duSoFXcn7WEGP0fTQ-FbedoKFggFxB1cReCSKMvhxwyHlSNsLBHyOX7Me43rg_Fl9SYdJ-vt7ZPUdsKJIBLQD9yX_De-eDCYJ5aBnImVC0djGgmIx_IVnsG6-63M9BH_K22EF7eckO_6oCYWKNt3Q9XHsc_PcpA7r3Dpuucad4KUv8FU5Pxpz1XeBwTEJdRty51hclyc3aSDHz5YmFrnC_T9WI6vsg")`,
+          }}
         >
-          <AccountSidebar
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            closeSidebar={() => setSidebarOpen(false)}
-          />
-        </aside>
+          <div className="flex flex-col gap-4 text-center max-w-2xl">
+            {/* White text is OK here because background is dark */}
+            <h1 className="text-4xl sm:text-5xl font-black text-white leading-tight">
+             Smart AI & ML-Based Breed Detection for Cattle and Buffaloes
+            </h1>
+            <h2 className="text-base sm:text-lg text-white/90">
+              Identify breeds instantly with our advanced image recognition
+              technology. Improve your herd management and productivity.
+            </h2>
+          </div>
 
-        {/* Overlay for Mobile */}
-        {sidebarOpen && (
-          <div
-            onClick={() => setSidebarOpen(false)}
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 md:hidden transition-opacity"
-          />
-        )}
+          <Link
+            href="/BreedDetection"
+            className="mt-8 flex items-center justify-center h-12 px-8 
+              bg-gradient-to-r from-green-600 to-green-700 
+              text-white text-base font-semibold rounded-xl shadow-lg 
+              hover:from-green-500 hover:to-green-600 
+              hover:shadow-xl hover:scale-105 
+              transition-all duration-300 ease-in-out"
+          >
+            <span>Get Started</span>
+          </Link>
+        </div>
 
-        {/* Main Content */}
-        <main className="flex-1 p-6 my-2 sm:p-8 bg-gray-50 md:bg-white overflow-y-auto border-l border-gray-200 md:border-none md:rounded-r-2xl transition-all min-h-[70.5vh]">
-          {activeTab === "account" && <AccountDetails />}
-          {activeTab === "preferences" && <Preferences />}
-          {activeTab === "contact" && <Contact />}
-        </main>
+        {/* ================= WHY CHOOSE SECTION ================= */}
+        <div className="flex flex-col gap-10 px-4 pt-22 pb-10">
+          <div className="flex flex-col gap-4 text-center">
+            {/* REMOVED text-gray-800 */}
+            <h1 className="text-3xl sm:text-4xl font-bold max-w-3xl mx-auto">
+              Why Choose Our Breed Recognition Tool?
+            </h1>
+            <p className="text-base max-w-3xl mx-auto">
+              Our tool offers accurate and efficient breed identification,
+              helping you make informed decisions for your livestock.
+            </p>
+          </div>
+
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+  {[
+    {
+      icon: <Search className="w-6 h-6" />,
+      title: "Accurate Identification",
+      text: "Our tool uses advanced ML algorithms to accurately identify cattle and buffalo breeds from images.",
+    },
+    {
+      icon: <BarChart3 className="w-6 h-6" />,
+      title: "Data-Driven Insights",
+      text: "Gain valuable insights into your herd's composition and performance with detailed breed information.",
+    },
+    {
+      icon: <Users className="w-6 h-6" />,
+      title: "Community Support",
+      text: "Connect with other farmers and experts to share knowledge and best practices for breed management.",
+    },
+  ].map((item, idx) => (
+    <div
+      key={idx}
+      className="flex flex-col gap-4 items-center text-center p-6 
+                 bg-[var(--secondary-bg)] rounded-xl 
+                 shadow-md hover:shadow-xl 
+                 transform transition-all duration-500 hover:scale-105"
+    >
+      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-green-200 text-green-700">
+        {item.icon}
+      </div>
+      <div className="flex flex-col gap-1">
+        <h2 className="text-lg font-bold">{item.title}</h2>
+        <p className="text-sm">{item.text}</p>
       </div>
     </div>
+  ))}
+</div>
+
+        </div>
+
+        {/* ================= CTA SECTION ================= */}
+        <div className="flex flex-col items-center gap-6 px-4 py-16 text-center sm:pt-34">
+          <div className="flex flex-col gap-2">
+            {/* REMOVED text-gray-800 */}
+            <h1 className="text-3xl sm:text-4xl font-bold max-w-2xl">
+              Ready to Transform Your Livestock Management?
+            </h1>
+            <p className="text-base max-w-2xl mx-auto">
+              Start using our AI-powered breed recognition tool today and
+              experience the difference.
+            </p>
+          </div>
+        </div>
+
+        <ContactUs />
+        <Footer className="sticky bottom-0 w-full" />
+      </div>
+    </main>
   );
 }
