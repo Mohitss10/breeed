@@ -39,7 +39,8 @@ export default function AccountSidebar({
                 </button>
             </div>
 
-            <div className="flex flex-col md:space-y-2 space-x-4 md:space-x-0">
+            <div className="flex flex-col space-y-3 md:space-y-2">
+
                 {tabs.map(({ name, key, path }) => {
                     const isActive = activeTab === key;
 
