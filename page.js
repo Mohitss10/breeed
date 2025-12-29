@@ -11,7 +11,6 @@ export default function HomePage() {
     <main className="flex min-h-screen items-center justify-center pt-16 px-6 font-sans">
       {/* REMOVED text-gray-* → now inherits from global theme */}
       <div className="min-h-screen flex flex-col">
-
         {/* ================= HERO SECTION ================= */}
         <div
           className="relative flex flex-col items-center rounded-3xl justify-center min-h-[50vh] sm:min-h-[60vh] p-6 mt-2 sm:p-8 bg-cover bg-center"
@@ -22,7 +21,7 @@ export default function HomePage() {
           <div className="flex flex-col gap-4 text-center max-w-2xl">
             {/* White text is OK here because background is dark */}
             <h1 className="text-4xl sm:text-5xl font-black text-white leading-tight">
-             Smart AI & ML-Based Breed Detection for Cattle and Buffaloes
+              Smart AI & ML-Based Breed Detection for Cattle and Buffaloes
             </h1>
             <h2 className="text-base sm:text-lg text-white/90">
               Identify breeds instantly with our advanced image recognition
@@ -33,9 +32,8 @@ export default function HomePage() {
           <Link
             href="/BreedDetection"
             className="mt-8 flex items-center justify-center h-12 px-8 
-              bg-gradient-to-r from-green-600 to-green-700 
-              text-white text-base font-semibold rounded-xl shadow-lg 
-              hover:from-green-500 hover:to-green-600 
+               text-base font-semibold rounded-xl shadow-lg border
+              btn-theme
               hover:shadow-xl hover:scale-105 
               transition-all duration-300 ease-in-out"
           >
@@ -56,42 +54,41 @@ export default function HomePage() {
             </p>
           </div>
 
-<div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-  {[
-    {
-      icon: <Search className="w-6 h-6" />,
-      title: "Accurate Identification",
-      text: "Our tool uses advanced ML algorithms to accurately identify cattle and buffalo breeds from images.",
-    },
-    {
-      icon: <BarChart3 className="w-6 h-6" />,
-      title: "Data-Driven Insights",
-      text: "Gain valuable insights into your herd's composition and performance with detailed breed information.",
-    },
-    {
-      icon: <Users className="w-6 h-6" />,
-      title: "Community Support",
-      text: "Connect with other farmers and experts to share knowledge and best practices for breed management.",
-    },
-  ].map((item, idx) => (
-    <div
-      key={idx}
-      className="flex flex-col gap-4 items-center text-center p-6 
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {[
+              {
+                icon: <Search className="w-6 h-6" />,
+                title: "Accurate Identification",
+                text: "Our tool uses advanced ML algorithms to accurately identify cattle and buffalo breeds from images.",
+              },
+              {
+                icon: <BarChart3 className="w-6 h-6" />,
+                title: "Data-Driven Insights",
+                text: "Gain valuable insights into your herd's composition and performance with detailed breed information.",
+              },
+              {
+                icon: <Users className="w-6 h-6" />,
+                title: "Community Support",
+                text: "Connect with other farmers and experts to share knowledge and best practices for breed management.",
+              },
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                className="flex flex-col gap-4 items-center text-center p-6 
                  bg-[var(--secondary-bg)] rounded-xl 
                  shadow-md hover:shadow-xl 
                  transform transition-all duration-500 hover:scale-105"
-    >
-      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-green-200 text-green-700">
-        {item.icon}
-      </div>
-      <div className="flex flex-col gap-1">
-        <h2 className="text-lg font-bold">{item.title}</h2>
-        <p className="text-sm">{item.text}</p>
-      </div>
-    </div>
-  ))}
-</div>
-
+              >
+                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-green-200 text-green-700">
+                  {item.icon}
+                </div>
+                <div className="flex flex-col gap-1">
+                  <h2 className="text-lg font-bold">{item.title}</h2>
+                  <p className="text-sm">{item.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* ================= CTA SECTION ================= */}
