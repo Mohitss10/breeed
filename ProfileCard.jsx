@@ -1,5 +1,7 @@
 "use client";
-import Link from "next/link";
+
+import { useRouter } from "next/navigation";
+import { startTransition } from "react";
 
 export default function ProfileCard({
   user,
@@ -7,6 +9,8 @@ export default function ProfileCard({
   profileOpen,
   setProfileOpen,
 }) {
+  const router = useRouter();
+
   if (!profileOpen) return null;
 
   return (
@@ -15,12 +19,16 @@ export default function ProfileCard({
       <div
         className="fixed inset-0 bg-transparent z-[9998]"
         onClick={() => setProfileOpen(false)}
-      ></div>
+      />
 
       {/* actual card */}
       <div
         id="profile-card"
-        className="fixed right-4 top-19 w-80 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 ease-out z-[9999]"
+        className="
+          fixed right-4 top-19 w-80 rounded-2xl shadow-xl
+          overflow-hidden transform transition-all duration-300 ease-out
+          z-[9999]
+        "
         style={{
           backgroundColor: "var(--secondary-bg)",
           color: "var(--text-color)",
@@ -39,41 +47,57 @@ export default function ProfileCard({
               src={user.imageUrl}
               alt="Profile"
               className="
-        w-16 h-16 rounded-full object-cover
-        border-2 border-white shadow-md mb-1
-      "
+                w-16 h-16 rounded-full object-cover
+                border-2 border-white shadow-md
+              "
             />
-            <h2 className="font-semibold text-xl ">
+            <h2 className="font-semibold text-xl">
               {user.fullName || "User"}
             </h2>
           </div>
         </div>
 
         {/* Info Section */}
-        <div className="py-3 text-center border-top">
-          <p className=" text-sm break-words">
+        <div className="py-3 text-center">
+          <p className="text-sm break-words">
             {user.primaryEmailAddress?.emailAddress || "No email available"}
           </p>
 
           {/* Buttons */}
           <div className="mt-4 flex flex-col items-center space-y-3">
-            <Link
-              href="/profile/account"
-              onClick={() => setProfileOpen(false)}
-              className="cursor-pointer w-3/4 font-medium text-sm py-2 rounded-lg  transition btn-theme text-center"
+            {/* ACCOUNT (SMOOTH TRANSITION) */}
+            <button
+              onClick={() => {
+                setProfileOpen(false);
+
+                // allow close animation before navigation
+                setTimeout(() => {
+                  startTransition(() => {
+                    router.push("/profile/account");
+                  });
+                }, 150);
+              }}
+              className="
+                cursor-pointer w-3/4 font-medium text-sm py-2
+                rounded-lg transition btn-theme text-center
+              "
             >
               Account
-            </Link>
+            </button>
           </div>
 
           <hr className="my-4 border-theme" />
 
+          {/* LOGOUT */}
           <button
             onClick={() => {
               setProfileOpen(false);
               signOut({ redirectUrl: "/" });
             }}
-            className="cursor-pointer w-3/4 mx-auto py-2 rounded-lg font-medium transition btn-theme"
+            className="
+              cursor-pointer w-3/4 mx-auto py-2
+              rounded-lg font-medium transition btn-theme
+            "
           >
             Logout
           </button>
