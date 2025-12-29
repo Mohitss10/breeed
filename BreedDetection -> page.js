@@ -111,12 +111,12 @@ export default function BreedDetection() {
     <div className="min-h-screen flex flex-col transition-theme">
       <main className="flex-grow px-4 pb-6 flex items-center justify-center">
         <div className="w-full max-w-2xl">
-
           {/* Heading */}
           <div className="text-center pt-5 pb-4">
             <h2 className="text-3xl font-bold">Upload Image</h2>
             <p className="mt-2 opacity-80">
-              For best results, ensure the animal is clearly visible and well-lit.
+              For best results, ensure the animal is clearly visible and
+              well-lit.
             </p>
           </div>
 
@@ -147,11 +147,14 @@ export default function BreedDetection() {
                 {/* Browse Button */}
                 <label
                   className="
-                    mt-2 flex items-center justify-center gap-2
-                    rounded-lg px-5 py-2 text-sm font-bold cursor-pointer
-                    border border-theme shadow-theme transition-theme
-                    hover:scale-105
-                  "
+    mt-2 flex items-center justify-center gap-2
+    rounded-lg px-5 py-2 text-sm font-bold cursor-pointer
+    border border-theme shadow-theme
+    transition-all duration-300 ease-out
+
+    hover:scale-105
+    hover:shadow-lg
+  "
                   style={{
                     backgroundColor: "var(--background)",
                     color: "var(--text-color)",
@@ -181,7 +184,7 @@ export default function BreedDetection() {
               onClick={handleSubmit}
               disabled={loading}
               className="
-                w-full mt-6 rounded-lg py-3 font-bold text-white
+                w-full mt-6 rounded-lg py-3 font-bold
                 transition-theme shadow-theme
                 disabled:opacity-50
               "
@@ -202,9 +205,7 @@ export default function BreedDetection() {
             </button>
           )}
 
-          {error && (
-            <p className="mt-4 text-center text-red-500">{error}</p>
-          )}
+          {error && <p className="mt-4 text-center text-red-500">{error}</p>}
         </div>
       </main>
     </div>
