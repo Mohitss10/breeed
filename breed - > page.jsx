@@ -141,8 +141,7 @@ export default function BreedProfilePage() {
                 key={i}
                 className="px-4 py-2 rounded-full text-sm font-medium
                            bg-green-100 text-green-800
-                           shadow-md hover:shadow-lg
-                           hover:scale-105 transition-all"
+                           shadow-md "
               >
                 {use}
               </span>
@@ -163,8 +162,7 @@ export default function BreedProfilePage() {
               <div
                 key={i}
                 className="p-6 rounded-2xl bg-[var(--secondary-bg)]
-                           shadow-lg hover:shadow-xl
-                           hover:scale-[1.02] transition-all"
+                           shadow-lg "
               >
                 <h3 className="text-xl font-semibold flex items-center mb-2">
                   <IoIosCheckmarkCircleOutline className="text-green-600 mr-2 text-2xl" />
