@@ -36,7 +36,7 @@ export default function AccountDetails() {
   };
 
   return (
-    <div className="max-w-2xl w-full space-y-6">
+    <div className="max-w-2xl w-full page-enter space-y-6">
 
       {/* ================= ACCOUNT DETAILS ================= */}
       <div
