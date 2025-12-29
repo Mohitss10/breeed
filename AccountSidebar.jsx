@@ -24,16 +24,16 @@ export default function AccountSidebar({
     return (
         <div className="flex flex-col space-y-6">
             {/* Back & Close buttons */}
-            <div className="flex items-center justify-between md:justify-start">
+            <div className="flex items-center justify-between md:justify-start ">
                 <button
                     onClick={handleBack}
-                    className="flex items-center text-gray-500 hover:text-gray-700 text-sm"
+                    className="flex items-center  text-sm"
                 >
                     <ArrowLeft className="w-4 h-4 mr-2" /> Back
                 </button>
                 <button
                     onClick={closeSidebar}
-                    className="md:hidden p-1 text-gray-500 hover:text-gray-700"
+                    className="md:hidden p-1 "
                 >
                     <X className="w-5 h-5" />
                 </button>
@@ -54,8 +54,8 @@ export default function AccountSidebar({
                             }}
                             className={`block py-2 px-3 rounded-md font-medium text-sm transition btn-theme ${
                                 isActive
-                                    ? "opacity-90"
-                                    : "opacity-70 hover:opacity-100"
+                                    ? "opacity-90 border"
+                                    : "opacity-70  hover:opacity-100"
                             }`}
                         >
                             {name}
