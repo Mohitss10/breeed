@@ -20,7 +20,7 @@
   --background: #121212;
   --text-color: #e5e7eb; /* gray-200 */
   --secondary-bg: #1e1e1e; /* cards, sidebar */
-  --border-color: #374151; /* gray-700 */
+  --border-color: #e0feeb; /* gray-700 */
   --primary: #1b5e20;
   --accent: #66bb6a;
   --placeholder-color: rgba(255, 255, 255, 0.55);
@@ -161,7 +161,7 @@ select:focus {
    PROFILE BUTTON THEME
 ========================= */
 .btn-theme {
-  background-color: #e0f2fe; /* light theme default */
+  background-color: #e0feeb; /* light theme default */
   color: black;
   transition: all 0.3s;
 }
@@ -173,22 +173,25 @@ select:focus {
 
 /* Logout Button Theme */
 .btn-theme-logout {
-  background-color: #fee2e2; /* light theme default (red-50) */
-  color: #b91c1c;            /* red-600 */
+  background-color: #ff5f5f
+; /* light theme default (red-50) */
+  color: #fef2f2
+;            /* red-600 */
   transition: all 0.3s;
 }
 
 .btn-theme-logout:hover {
-  background-color: #fecaca; /* light theme hover (red-100) */
+  background-color: #ff3030
+; /* light theme hover (red-100) */
 }
 
 [data-theme="dark"] .btn-theme-logout {
-  background-color: #e0b9ab; /* brownish color in dark theme */
+  background-color: #ff5f5f; /* brownish color in dark theme */
   color: var(--text-color);
 }
 
 [data-theme="dark"] .btn-theme-logout:hover {
-  background-color: #b85a38; /* slightly lighter brown on hover */
+  background-color: #ff3030; /* slightly lighter brown on hover */
 }
 
 
