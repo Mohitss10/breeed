@@ -1,7 +1,8 @@
 "use client";
 
 import { useUser, useClerk } from "@clerk/nextjs";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { toast } from "sonner";
 
 export default function AccountDetails() {
   const { user } = useUser();
@@ -9,35 +10,81 @@ export default function AccountDetails() {
 
   const [name, setName] = useState(user?.fullName || "");
   const [isEditingName, setIsEditingName] = useState(false);
-  const [modalType, setModalType] = useState(null); // signOut | signOutAll | delete
+  const [modalType, setModalType] = useState(null);
 
+  // ✅ Ref to prevent duplicate toast
+  const hasShownToast = useRef(false);
+
+  // ✅ Show toast once after user is loaded
+  useEffect(() => {
+    if (user && !hasShownToast.current) {
+      toast.success("Account details loaded");
+      hasShownToast.current = true;
+    }
+  }, [user]);
+
+  /* ================= NAME CHANGE ================= */
   const handleNameChange = async () => {
-    if (!name.trim()) return;
-    await user.update({
-      firstName: name.split(" ")[0],
-      lastName: name.split(" ")[1] || "",
-    });
-    setIsEditingName(false);
+    if (!name.trim()) {
+      toast.warning("Name cannot be empty");
+      return;
+    }
+
+    const id = toast.loading("Updating name...");
+    try {
+      await user.update({
+        firstName: name.split(" ")[0],
+        lastName: name.split(" ")[1] || "",
+      });
+      toast.success("Name updated successfully", { id });
+      setIsEditingName(false);
+    } catch {
+      toast.error("Failed to update name", { id });
+    }
   };
 
+  /* ================= AVATAR CHANGE ================= */
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
-    if (file) await user.setProfileImage({ file });
+    if (!file) return;
+
+    const id = toast.loading("Uploading avatar...");
+    try {
+      await user.setProfileImage({ file });
+      toast.success("Avatar updated", { id });
+    } catch {
+      toast.error("Avatar upload failed", { id });
+    }
   };
 
+  /* ================= CONFIRM ACTIONS ================= */
   const handleConfirm = async () => {
-    if (modalType === "signOut") await signOut();
-    if (modalType === "signOutAll") await signOut({ session: "all" });
-    if (modalType === "delete") {
-      await user.delete();
-      await signOut({ redirectUrl: "/" });
+    const id = toast.loading("Processing...");
+    try {
+      if (modalType === "signOut") {
+        await signOut();
+      }
+      if (modalType === "signOutAll") {
+        await signOut({ session: "all" });
+      }
+      if (modalType === "delete") {
+        await user.delete();
+        await signOut({ redirectUrl: "/" });
+      }
+
+      toast.success(
+        modalType === "delete" ? "Account deleted" : "Action completed",
+        { id }
+      );
+    } catch {
+      toast.error("Something went wrong", { id });
+    } finally {
+      setModalType(null);
     }
-    setModalType(null);
   };
 
   return (
     <div className="max-w-2xl w-full page-enter space-y-6">
-
       {/* ================= ACCOUNT DETAILS ================= */}
       <div
         className="rounded-xl shadow-md p-4 space-y-4 transition-colors"
@@ -64,12 +111,8 @@ export default function AccountDetails() {
 
             {/* Change Avatar */}
             <label
-              className="
-                inline-block mt-2 px-3 py-1.5
-                rounded-md border cursor-pointer
-                transition-all hover:scale-105
-                btn-theme
-              "
+              className="inline-block mt-2 px-3 py-1.5 rounded-md border cursor-pointer
+                         transition-all hover:scale-105 btn-theme"
               style={{ borderColor: "var(--accent)" }}
             >
               Change avatar
@@ -92,14 +135,20 @@ export default function AccountDetails() {
                       color: "var(--text-color)",
                     }}
                   />
+
                   <button
                     onClick={handleNameChange}
                     className="px-3 py-1 rounded-md btn-theme"
                   >
                     Save
                   </button>
+
                   <button
-                    onClick={() => setIsEditingName(false)}
+                    onClick={() => {
+                      setIsEditingName(false);
+                      setName(user?.fullName || "");
+                      toast("Edit cancelled");
+                    }}
                     className="px-3 py-1 rounded-md border btn-theme"
                     style={{ borderColor: "var(--accent)" }}
                   >
@@ -108,12 +157,11 @@ export default function AccountDetails() {
                 </div>
               ) : (
                 <button
-                  onClick={() => setIsEditingName(true)}
-                  className="
-                    mt-2 px-3 py-1 rounded-md
-                    border transition-colors
-                    btn-theme
-                  "
+                  onClick={() => {
+                    setIsEditingName(true);
+                    toast.info("You can now edit your name");
+                  }}
+                  className="mt-2 px-3 py-1 rounded-md border btn-theme"
                   style={{ borderColor: "var(--accent)" }}
                 >
                   Change full name
@@ -135,77 +183,54 @@ export default function AccountDetails() {
         <h2 className="text-lg font-semibold text-theme">System</h2>
         <hr className="border-theme/30" />
 
-        {/* Sign out */}
-        <div className="flex justify-between items-center">
-          <p className="text-theme">Sign out</p>
-          <button
-            onClick={() => setModalType("signOut")}
-            className="px-3 py-1 rounded-md border btn-theme"
-            style={{ borderColor: "var(--accent)" }}
-          >
-            Sign out
-          </button>
-        </div>
+        <SystemRow
+          label="Sign out"
+          onClick={() => {
+            setModalType("signOut");
+            toast.warning("You are about to sign out");
+          }}
+        />
 
-        {/* Sign out all */}
-        <div className="flex justify-between items-center">
-          <p className="text-theme">Sign out of all sessions</p>
-          <button
-            onClick={() => setModalType("signOutAll")}
-            className="px-3 py-1 rounded-md border btn-theme"
-            style={{ borderColor: "var(--accent)" }}
-          >
-            Sign out all
-          </button>
-        </div>
+        <SystemRow
+          label="Sign out of all sessions"
+          onClick={() => {
+            setModalType("signOutAll");
+            toast.warning("Signing out from all sessions");
+          }}
+        />
 
-        {/* Delete */}
-        <div className="flex justify-between items-center">
-          <div>
-            <p className="text-theme">Delete account</p>
-            <p className="text-xs text-theme/70">
-              Permanently delete your account and data
-            </p>
-          </div>
-          <button
-            onClick={() => setModalType("delete")}
-            className="
-              px-3 py-1 rounded-md
-              border transition-colors
-              btn-theme
-            "
-            style={{ borderColor: "var(--accent)" }}
-          >
-            Delete
-          </button>
-        </div>
+        <SystemRow
+          label="Delete account"
+          danger
+          onClick={() => {
+            setModalType("delete");
+            toast.error("This action is permanent");
+          }}
+        />
       </div>
 
       {/* ================= CONFIRM MODAL ================= */}
       {modalType && (
         <div
-          className="fixed inset-0 flex items-center justify-center z-50"
-          style={{ backgroundColor: "rgba(0,0,0,0.4)" }}
+          className="fixed inset-0 z-50 flex items-center justify-center
+                     bg-black/50 backdrop-blur-sm"
+          onClick={() => setModalType(null)}
         >
           <div
-            className="rounded-xl shadow-xl p-6 w-80 text-center"
+            onClick={(e) => e.stopPropagation()}
+            className="rounded-xl shadow-xl p-6 w-80 text-center
+                       transition-transform scale-100"
             style={{
               backgroundColor: "var(--secondary)",
               border: "1px solid var(--accent)",
             }}
           >
             <h2 className="text-lg font-semibold text-theme mb-2">
-              {modalType === "delete"
-                ? "Delete Account?"
-                : modalType === "signOutAll"
-                ? "Sign out of all sessions?"
-                : "Sign out?"}
+              Confirm action
             </h2>
 
             <p className="text-theme/70 text-sm mb-4">
-              {modalType === "delete"
-                ? "This action is permanent and cannot be undone."
-                : "Are you sure you want to continue?"}
+              Are you sure you want to continue?
             </p>
 
             <div className="flex justify-center gap-3">
@@ -227,6 +252,22 @@ export default function AccountDetails() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+/* ================= SMALL HELPER ================= */
+function SystemRow({ label, onClick, danger }) {
+  return (
+    <div className="flex justify-between items-center">
+      <p className="text-theme">{label}</p>
+      <button
+        onClick={onClick}
+        className={`px-3 py-1 rounded-md border transition-colors
+          ${danger ? "btn-theme-logout" : "btn-theme"}`}
+      >
+        {label}
+      </button>
     </div>
   );
 }
