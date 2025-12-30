@@ -164,7 +164,7 @@ export default function AccountDetails() {
                   className="mt-2 px-3 py-1 rounded-md border btn-theme"
                   style={{ borderColor: "var(--accent)" }}
                 >
-                  Change full name
+                  Change name
                 </button>
               )}
             </div>
@@ -271,4 +271,5 @@ function SystemRow({ label, onClick, danger }) {
     </div>
   );
 }
+
 
