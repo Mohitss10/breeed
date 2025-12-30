@@ -48,7 +48,7 @@ export default function AccountDetails() {
     const file = e.target.files[0];
     if (!file) return;
 
-    const id = toast.loading("Uploading avatar...");
+    const id = toast.loading("Uploading picture...");
     try {
       await user.setProfileImage({ file });
       toast.success("Profile picture updated", { id });
@@ -271,3 +271,4 @@ function SystemRow({ label, onClick, danger }) {
     </div>
   );
 }
+
